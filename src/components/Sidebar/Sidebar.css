@@ -1,0 +1,97 @@
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(45, 45, 45, 0);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-overlay-active {
+  background-color: rgba(45, 45, 45, 0.95);
+}
+
+.sidebar-menu {
+  width: 400px;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar-menu-active {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 30px;
+}
+
+.sidebar-close {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sidebar-close:hover {
+  opacity: 0.7;
+}
+
+.sidebar-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.sidebar-section:last-child {
+  border-bottom: none;
+}
+
+.sidebar-section-gray {
+  background-color: #efeeef;
+  flex: 1;
+}
+
+.sidebar-link {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  text-decoration: none;
+  padding: 10px 0;
+  text-align: right;
+  transition: color 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: #eb0a1e;
+}
