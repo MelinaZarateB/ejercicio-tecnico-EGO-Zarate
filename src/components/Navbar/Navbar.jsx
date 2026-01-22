@@ -12,7 +12,7 @@ const Navbar = () => {
     <nav className="header">
       <div className="header-container">
         <div className="header-left">
-          <img src="/src/assets/Logo.svg" alt="Logo EGO" />
+          <img src="/src/assets/Logo.svg" alt="Logo EGO" className="logo" />
 
           <nav className="nav">
             <a href="" className="nav-link active">
@@ -25,7 +25,7 @@ const Navbar = () => {
         </div>
 
         <button className="menu-button" onClick={openMenu}>
-          <span>Menú</span>
+          <span className="menu-text">Menú</span>
           <div className="menu-icon">
             <span className="menu-line"></span>
             <span className="menu-line"></span>

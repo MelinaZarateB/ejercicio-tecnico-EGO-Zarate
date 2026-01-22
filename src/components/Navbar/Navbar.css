@@ -79,3 +79,26 @@
   width: 20px;
   background-color: #191919;
 }
+
+.menu-text {
+  display: inline;
+}
+
+/* Navbar responsiva */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 12px 16px;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-text {
+    display: none;
+  }
+
+  .header-left {
+    gap: 0;
+  }
+}

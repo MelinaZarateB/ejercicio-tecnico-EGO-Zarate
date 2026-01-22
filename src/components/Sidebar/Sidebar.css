@@ -8,7 +8,7 @@
   z-index: 1000;
   display: flex;
   justify-content: flex-end;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.4s ease;
 }
 
 .sidebar-overlay-active {
@@ -94,4 +94,23 @@
 
 .sidebar-link:hover {
   color: #eb0a1e;
+}
+
+/* Sidebar responsiva */
+@media (max-width: 768px) {
+  .sidebar-overlay-active {
+    background-color: transparent;
+  }
+
+  .sidebar-menu {
+    width: 100%;
+  }
+
+  .sidebar-header {
+    padding: 16px 20px;
+  }
+
+  .sidebar-section {
+    padding: 16px 20px;
+  }
 }
