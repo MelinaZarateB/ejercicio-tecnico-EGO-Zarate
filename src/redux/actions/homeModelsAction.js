@@ -11,7 +11,7 @@ export const getModels = () => {
       if (models) {
         dispatch({
           type: GET_MODELS,
-          payload: models,
+          payload: models.data,
         });
       }
     } catch (error) {
