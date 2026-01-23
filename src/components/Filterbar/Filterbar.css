@@ -4,6 +4,7 @@
   justify-content: space-between;
   border-bottom: 1px solid #d8d8d8;
   padding-bottom: 16px;
+  position: relative;
 }
 
 .filter-left {
@@ -28,7 +29,7 @@
   font-size: 14px;
   border-radius: 9999px;
   background: none;
-  border: none;
+  border: 1px solid transparent;
   color: #979797;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -40,8 +41,27 @@
 }
 
 .filter-button.active {
-  border: 1px solid #191919;
+  border-color: #191919;
   color: #191919;
+}
+
+/* Dropdown containers */
+.filter-dropdown-container,
+.sort-dropdown-container {
+  position: relative;
+}
+
+.filter-dropdown-trigger {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #191919;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  padding: 0;
 }
 
 .sort-button {
@@ -56,7 +76,57 @@
   font-family: "Montserrat", sans-serif;
 }
 
-/* Mobile responsive - 768px and below */
+.dropdown-arrow {
+  transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  background-color: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  min-width: 180px;
+  margin-top: 8px;
+}
+
+.filter-dropdown-menu {
+  left: 0;
+}
+
+.sort-dropdown-menu {
+  right: 0;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #191919;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f7f7f7;
+}
+
+.dropdown-item.active {
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .filter-bar {
     padding-bottom: 12px;
@@ -70,20 +140,11 @@
     display: none;
   }
 
-  .filter-label {
+  .filter-dropdown-trigger {
     display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
   }
 
-  .filter-label::after {
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid #191919;
-    margin-left: 4px;
+  .dropdown-menu {
+    min-width: 200px;
   }
 }
