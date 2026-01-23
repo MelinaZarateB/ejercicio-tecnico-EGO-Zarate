@@ -55,3 +55,35 @@
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
 }
+
+/* Mobile responsive - 768px and below */
+@media (max-width: 768px) {
+  .filter-bar {
+    padding-bottom: 12px;
+  }
+
+  .filter-left {
+    gap: 0;
+  }
+
+  .filter-buttons {
+    display: none;
+  }
+
+  .filter-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .filter-label::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #191919;
+    margin-left: 4px;
+  }
+}

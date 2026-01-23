@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const Card = ({ name, year, price, photo, isHighlighted = false }) => {
   const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
       className="car-card"
@@ -24,9 +25,11 @@ const Card = ({ name, year, price, photo, isHighlighted = false }) => {
           className="car-image"
         />
       </div>
-      {(isHighlighted || isHovered) && (
-        <button className="view-model-button">Ver Modelo</button>
-      )}
+      <button
+        className={`view-model-button ${isHighlighted || isHovered ? "visible" : ""}`}
+      >
+        Ver Modelo
+      </button>
     </div>
   );
 };

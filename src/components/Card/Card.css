@@ -45,11 +45,45 @@
   border-radius: 9999px;
   background: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
   font-family: "Montserrat", sans-serif;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.view-model-button.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 .view-model-button:hover {
   background-color: #191919;
   color: #ffffff;
+}
+
+/* Mobile responsive - 768px and below */
+@media (max-width: 768px) {
+  .car-card {
+    padding: 0 16px;
+  }
+
+  .car-name {
+    font-size: 18px;
+    order: 1;
+  }
+
+  .car-info {
+    font-size: 13px;
+    order: 2;
+    margin-bottom: 8px;
+  }
+
+  .car-image-container {
+    order: 3;
+    max-width: 280px;
+    margin-bottom: 0;
+  }
 }
