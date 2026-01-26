@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_MODEL_DETAIL } from "../action-types";
+import { GET_MODEL_DETAIL, CLEAN_DETAIL } from "../action-types";
 import Swal from "sweetalert2";
 
 export const getModelDetail = (id) => {
@@ -11,7 +11,7 @@ export const getModelDetail = (id) => {
       if (model) {
         dispatch({
           type: GET_MODEL_DETAIL,
-          payload: model,
+          payload: model.data,
         });
       }
     } catch (error) {
@@ -24,5 +24,11 @@ export const getModelDetail = (id) => {
         icon: "error",
       });
     }
+  };
+};
+
+export const cleanDetail = () => {
+  return {
+    type: CLEAN_DETAIL,
   };
 };

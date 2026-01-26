@@ -12,7 +12,20 @@
   align-items: center;
   gap: 24px;
 }
-
+.span-filter {
+  font-weight: 600;
+  letter-spacing: 0.08px;
+  font-size: 14px;
+  color: #373737;
+  line-height: 14px;
+}
+.span-filter-mobile {
+  font-weight: 600;
+  letter-spacing: 0.08px;
+  font-size: 14px;
+  color: #373737;
+  line-height: 14px;
+}
 .filter-label {
   font-size: 14px;
   color: #191919;
@@ -26,14 +39,19 @@
 
 .filter-button {
   padding: 8px 16px;
+  min-width: 71px;
+  height: 31px;
   font-size: 14px;
-  border-radius: 9999px;
+  font-weight: 400;
+  border-radius: 18px;
   background: none;
   border: 1px solid transparent;
-  color: #979797;
+  color: #373737;
+  letter-spacing: 0.08px;
+  line-height: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
 }
 
 .filter-button:hover {
@@ -41,8 +59,10 @@
 }
 
 .filter-button.active {
-  border-color: #191919;
-  color: #191919;
+  border-color: #f7f7f7;
+  color: #373737;
+  font-size: 14;
+  background-color: #f7f7f7;
 }
 
 /* Dropdown containers */
@@ -74,6 +94,13 @@
   border: none;
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
+}
+.span-order {
+  letter-spacing: 0.08px;
+  color: #373737;
+  font-weight: 600;
+  line-height: 14px;
+  font-size: 14px;
 }
 
 .dropdown-arrow {
@@ -107,16 +134,26 @@
 
 .dropdown-item {
   display: block;
+  width: 170px;
   width: 100%;
-  padding: 10px 16px;
-  font-size: 14px;
+  height: 37px;
+  padding: 0 12px;
+  font-size: 10px;
+  line-height: 35px;
+  letter-spacing: -0.1px;
   color: #191919;
   background: none;
   border: none;
+  border-bottom: 1px solid #d8d8d8;
   text-align: left;
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
   transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
 }
 
 .dropdown-item:hover {
@@ -127,6 +164,10 @@
   font-weight: 600;
 }
 
+.dropdown-item strong {
+  font-weight: 700;
+}
+
 @media (max-width: 768px) {
   .filter-bar {
     padding-bottom: 12px;
@@ -134,6 +175,9 @@
 
   .filter-left {
     gap: 0;
+  }
+  .span-filter {
+    display: none;
   }
 
   .filter-buttons {

@@ -1,12 +1,30 @@
 import "./Navbar.css";
 import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import { cleanDetail } from "../../redux/actions/detailModelAction";
+import { useDispatch } from "react-redux";
 
-const Navbar = () => {
+const Navbar = ({ activeTab = "modelos", onNavigate }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const dispatch = useDispatch();
 
   const openMenu = () => setIsOpenMenu(true);
   const closeMenu = () => setIsOpenMenu(false);
+
+  const handleNavClick = (tab) => (e) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate(tab);
+    }
+  };
+  const cleanDetailAction = () => {
+    dispatch(cleanDetail());
+  };
+  const handleModelosClick = (e) => {
+    e.preventDefault();
+    cleanDetailAction();
+    handleNavClick("modelos")(e);
+  };
 
   return (
     <nav className="header">
@@ -15,10 +33,19 @@ const Navbar = () => {
           <img src="/src/assets/Logo.svg" alt="Logo EGO" className="logo" />
 
           <nav className="nav">
-            <a href="" className="nav-link active">
+            <a
+              href="#"
+              className={`nav-link ${activeTab === "modelos" ? "active" : ""}`}
+              onClick={handleModelosClick}
+            >
               Modelos
             </a>
-            <a href="" className="nav-link">
+
+            <a
+              href="#"
+              className={`nav-link ${activeTab === "ficha" ? "active" : ""}`}
+              onClick={handleNavClick("ficha")}
+            >
               Ficha de modelo
             </a>
           </nav>
@@ -27,9 +54,7 @@ const Navbar = () => {
         <button className="menu-button" onClick={openMenu}>
           <span className="menu-text">Menú</span>
           <div className="menu-icon">
-            <span className="menu-line"></span>
-            <span className="menu-line"></span>
-            <span className="menu-line"></span>
+            <img src="/src/assets/Group.svg" alt="Icono menu" />
           </div>
         </button>
       </div>

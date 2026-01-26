@@ -30,7 +30,7 @@
 .nav-link {
   padding-bottom: 16px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #191919;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -50,7 +50,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 102%;
   height: 3px;
   background-color: #eb0a1e;
 }
@@ -73,15 +73,12 @@
   gap: 4px;
 }
 
-.menu-line {
-  display: block;
-  height: 2px;
-  width: 20px;
-  background-color: #191919;
-}
-
 .menu-text {
   display: inline;
+  font-weight: 400;
+  font-size: 14px;
+  color: #191919;
+  line-height: auto;
 }
 
 /* Navbar responsiva */

@@ -1,17 +1,17 @@
 import "./CardGrid.css";
 import Card from "./../Card/Card";
 
-const CardGrid = ({ models }) => {
-  console.log(models);
+const CardGrid = ({ models, onSelectCar }) => {
   return (
     <div className="card-grid">
       {models.models?.map((model) => (
         <Card
-          key={model.id}
+          id={model.id}
           name={model.name}
           year={model.year}
           price={model.price}
           photo={model.photo}
+          onSelect={onSelectCar}
         />
       ))}
     </div>

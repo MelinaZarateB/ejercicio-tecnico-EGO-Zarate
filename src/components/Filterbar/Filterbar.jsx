@@ -1,20 +1,7 @@
 import "./Filterbar.css";
 import { useState, useRef, useEffect } from "react";
+import { filters, options } from "../../constants/Filtersbar";
 
-const filters = [
-  { id: "todos", label: "Todos" },
-  { id: "autos", label: "Autos" },
-  { id: "pickups", label: "Pickups y Comerciales" },
-  { id: "suvs", label: "SUVs y Crossovers" },
-];
-
-const sortOptions = [
-  { id: "nada", label: "Nada" },
-  { id: "precio-asc", label: "De menor a mayor precio" },
-  { id: "precio-desc", label: "De mayor a menor precio" },
-  { id: "nuevos", label: "Más nuevos primero" },
-  { id: "viejos", label: "Más viejos primero" },
-];
 const Filterbar = () => {
   const [activeFilter, setActiveFilter] = useState("todos");
   const [activeSort, setActiveSort] = useState("nada");
@@ -67,13 +54,14 @@ const Filterbar = () => {
   return (
     <div className="filter-bar">
       <div className="filter-left">
-        {/* Mobile Filter Dropdown */}
+        <span className="span-filter">Filtrar por</span>
+        {/* Barra modile dropdown */}
         <div className="filter-dropdown-container" ref={filterDropdownRef}>
           <button
             className="filter-dropdown-trigger"
             onClick={toggleFilterDropdown}
           >
-            <span>Filtrar por</span>
+            <span className="span-filter-mobile">Filtrar por</span>
             <svg
               width="12"
               height="12"
@@ -103,7 +91,7 @@ const Filterbar = () => {
           )}
         </div>
 
-        {/* Desktop Filter Buttons */}
+        {/* Barra para desktop */}
         <div className="filter-buttons">
           {filters.map((filter) => (
             <button
@@ -117,10 +105,10 @@ const Filterbar = () => {
         </div>
       </div>
 
-      {/* Sort Dropdown */}
+      {/* dropdown */}
       <div className="sort-dropdown-container" ref={sortDropdownRef}>
         <button className="sort-button" onClick={toggleSortDropdown}>
-          <span>Ordenar por</span>
+          <span className="span-order">Ordenar por</span>
           <svg
             width="12"
             height="12"
@@ -137,7 +125,7 @@ const Filterbar = () => {
         </button>
         {isSortDropdownOpen && (
           <div className="dropdown-menu sort-dropdown-menu">
-            {sortOptions.map((option) => (
+            {options.map((option) => (
               <button
                 key={option.id}
                 onClick={() => handleSortSelect(option.id)}
