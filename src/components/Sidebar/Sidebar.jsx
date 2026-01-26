@@ -1,5 +1,6 @@
 import "./Sidebar.css";
 import { useEffect, useState, useRef } from "react";
+import closeIcon from "./../../assets/CloseMenu.svg";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -52,7 +53,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         <div className="sidebar-header">
           <button className="sidebar-close" onClick={handleClose}>
             Cerrar
-            <img src="/src/assets/CloseMenu.svg" alt="" />
+            <img src={closeIcon} alt="Boton de cerrar" />
           </button>
         </div>
         <nav className="sidebar-nav">

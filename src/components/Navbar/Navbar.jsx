@@ -3,6 +3,8 @@ import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import { cleanDetail } from "../../redux/actions/detailModelAction";
 import { useDispatch } from "react-redux";
+import menuIcon from "./../../assets/Group.svg";
+import logoEGO from "./../../assets/Logo.svg";
 
 const Navbar = ({ activeTab = "modelos", onNavigate }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -30,7 +32,7 @@ const Navbar = ({ activeTab = "modelos", onNavigate }) => {
     <nav className="header">
       <div className="header-container">
         <div className="header-left">
-          <img src="/src/assets/Logo.svg" alt="Logo EGO" className="logo" />
+          <img src={logoEGO} alt="Logo EGO" className="logo" />
 
           <nav className="nav">
             <a
@@ -54,7 +56,7 @@ const Navbar = ({ activeTab = "modelos", onNavigate }) => {
         <button className="menu-button" onClick={openMenu}>
           <span className="menu-text">Menú</span>
           <div className="menu-icon">
-            <img src="/src/assets/Group.svg" alt="Icono menu" />
+            <img src={menuIcon} alt="Icono menu" />
           </div>
         </button>
       </div>
