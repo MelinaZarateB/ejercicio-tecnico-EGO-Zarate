@@ -1,14 +1,31 @@
-import "./CarouselDeatil.css";
-import { useState, useRef } from "react";
+import "./CarouselDetail.css";
+import { useState, useRef, useEffect } from "react";
 
 const CarouselDetail = ({ features }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef(null);
 
-  const featuresPerSlide = 4;
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const featuresPerSlide = isMobile ? 1 : 4;
   const totalSlides = features
-    ? Math.ceil(features.length / featuresPerSlide)
+    ? isMobile
+      ? features.length
+      : Math.ceil(features.length / featuresPerSlide)
     : 0;
+
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [isMobile]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
