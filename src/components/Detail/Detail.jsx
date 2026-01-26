@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getModelDetail } from "../../redux/actions/detailModelAction";
 import Spinner from "../../utils/Spinner/Spinner";
@@ -7,6 +7,7 @@ import "./Detail.css";
 
 const Detail = ({ carId, onBack }) => {
   const [model, setModel] = useState(null);
+  const highlightsRef = useRef([]);
 
   const dispatch = useDispatch();
   const detailModel = useSelector((state) => state.model?.model);
@@ -22,6 +23,30 @@ const Detail = ({ carId, onBack }) => {
       setModel(detailModel);
     }
   }, [detailModel]);
+
+  // para animacion de scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-in");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -50px 0px",
+      },
+    );
+
+    highlightsRef.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [model]);
 
   const parseHtmlContent = (html) => {
     if (!html) return "";
@@ -46,7 +71,7 @@ const Detail = ({ carId, onBack }) => {
           {/* Hero Section */}
           <section className="model-hero">
             <div className="model-hero-image">
-              <img src={model.photo} alt={model.name} />
+              <img src={model.photo || "/placeholder.svg"} alt={model.name} />
             </div>
             <div className="model-hero-content">
               <span className="model-segment">
@@ -66,6 +91,7 @@ const Detail = ({ carId, onBack }) => {
               {model.model_highlights.map((highlight, index) => (
                 <div
                   key={index}
+                  ref={(el) => (highlightsRef.current[index] = el)}
                   className={`highlight-row ${index % 2 === 0 ? "text-first" : "image-first"}`}
                 >
                   <div className="highlight-content">
@@ -75,7 +101,10 @@ const Detail = ({ carId, onBack }) => {
                     </p>
                   </div>
                   <div className="highlight-image">
-                    <img src={highlight.image} alt={highlight.title} />
+                    <img
+                      src={highlight.image || "/placeholder.svg"}
+                      alt={highlight.title}
+                    />
                   </div>
                 </div>
               ))}

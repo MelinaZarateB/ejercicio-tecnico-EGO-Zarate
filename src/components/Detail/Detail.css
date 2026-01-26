@@ -22,7 +22,6 @@
   font-family: "Montserrat";
 }
 
-/* Hero Section */
 .model-hero {
   display: flex;
   align-items: center;
@@ -74,7 +73,6 @@
   font-family: "Montserrat";
 }
 
-/* Highlights Sections */
 .model-highlights {
   padding: 64px 80px;
 }
@@ -96,6 +94,47 @@
 
 .highlight-row.image-first {
   flex-direction: row-reverse;
+}
+
+/* Animaciones de scroll */
+.highlight-row .highlight-content,
+.highlight-row .highlight-image {
+  opacity: 0;
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out;
+}
+
+.highlight-row.text-first .highlight-content {
+  transform: translateX(-60px);
+}
+
+.highlight-row.text-first .highlight-image {
+  transform: translateX(60px);
+}
+
+.highlight-row.image-first .highlight-content {
+  transform: translateX(60px);
+}
+
+.highlight-row.image-first .highlight-image {
+  transform: translateX(-60px);
+}
+
+/* Estado animado - cuando entra en viewport */
+.highlight-row.animate-in .highlight-content,
+.highlight-row.animate-in .highlight-image {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Delay para que la animación sea escalonada */
+.highlight-row.animate-in .highlight-content {
+  transition-delay: 0.1s;
+}
+
+.highlight-row.animate-in .highlight-image {
+  transition-delay: 0.3s;
 }
 
 .highlight-content {
@@ -131,10 +170,8 @@
   object-fit: cover;
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
   .main-content {
-    /* padding: 24px 16px; */
     height: 100vh;
   }
   .model-hero {
@@ -192,6 +229,16 @@
   .highlight-row.text-first,
   .highlight-row.image-first {
     flex-direction: column !important;
+  }
+
+  .highlight-row .highlight-content,
+  .highlight-row .highlight-image {
+    transform: translateY(40px);
+  }
+
+  .highlight-row.animate-in .highlight-content,
+  .highlight-row.animate-in .highlight-image {
+    transform: translateY(0);
   }
 
   .highlight-image {
