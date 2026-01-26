@@ -43,7 +43,7 @@ const Home = () => {
           <div className="filter-section">
             <Filterbar />
           </div>
-          {models.length > 0 ? (
+          {!models || models.length === 0 ? (
             <div className="lazy-spinner">
               <Spinner />
             </div>
