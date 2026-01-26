@@ -7,9 +7,27 @@ const Filterbar = () => {
   const [activeSort, setActiveSort] = useState("nada");
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
+  const [isFilterClosing, setIsFilterClosing] = useState(false);
+  const [isSortClosing, setIsSortClosing] = useState(false);
 
   const filterDropdownRef = useRef(null);
   const sortDropdownRef = useRef(null);
+
+  const closeFilterDropdown = () => {
+    setIsFilterClosing(true);
+    setTimeout(() => {
+      setIsFilterDropdownOpen(false);
+      setIsFilterClosing(false);
+    }, 300);
+  };
+
+  const closeSortDropdown = () => {
+    setIsSortClosing(true);
+    setTimeout(() => {
+      setIsSortDropdownOpen(false);
+      setIsSortClosing(false);
+    }, 300);
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -17,13 +35,13 @@ const Filterbar = () => {
         filterDropdownRef.current &&
         !filterDropdownRef.current.contains(event.target)
       ) {
-        setIsFilterDropdownOpen(false);
+        closeFilterDropdown();
       }
       if (
         sortDropdownRef.current &&
         !sortDropdownRef.current.contains(event.target)
       ) {
-        setIsSortDropdownOpen(false);
+        closeSortDropdown();
       }
     }
 
@@ -33,35 +51,42 @@ const Filterbar = () => {
 
   const handleFilterSelect = (filterId) => {
     setActiveFilter(filterId);
-    setIsFilterDropdownOpen(false);
+    closeFilterDropdown();
   };
 
   const handleSortSelect = (sortId) => {
     setActiveSort(sortId);
-    setIsSortDropdownOpen(false);
+    closeSortDropdown();
   };
 
   const toggleFilterDropdown = () => {
-    setIsFilterDropdownOpen(!isFilterDropdownOpen);
-    setIsSortDropdownOpen(false);
+    if (isFilterDropdownOpen) {
+      closeFilterDropdown();
+    } else {
+      setIsFilterDropdownOpen(true);
+      if (isSortDropdownOpen) closeSortDropdown();
+    }
   };
 
   const toggleSortDropdown = () => {
-    setIsSortDropdownOpen(!isSortDropdownOpen);
-    setIsFilterDropdownOpen(false);
+    if (isSortDropdownOpen) {
+      closeSortDropdown();
+    } else {
+      setIsSortDropdownOpen(true);
+      if (isFilterDropdownOpen) closeFilterDropdown();
+    }
   };
 
   return (
     <div className="filter-bar">
       <div className="filter-left">
-        <span className="span-filter">Filtrar por</span>
-        {/* Barra modile dropdown */}
+        {/* Mobile Filter Dropdown */}
         <div className="filter-dropdown-container" ref={filterDropdownRef}>
           <button
             className="filter-dropdown-trigger"
             onClick={toggleFilterDropdown}
           >
-            <span className="span-filter-mobile">Filtrar por</span>
+            <span>Filtrar por</span>
             <svg
               width="12"
               height="12"
@@ -77,7 +102,9 @@ const Filterbar = () => {
             </svg>
           </button>
           {isFilterDropdownOpen && (
-            <div className="dropdown-menu filter-dropdown-menu">
+            <div
+              className={`dropdown-menu filter-dropdown-menu ${isFilterClosing ? "closing" : ""}`}
+            >
               {filters.map((filter) => (
                 <button
                   key={filter.id}
@@ -91,7 +118,7 @@ const Filterbar = () => {
           )}
         </div>
 
-        {/* Barra para desktop */}
+        {/* Desktop Filter Buttons */}
         <div className="filter-buttons">
           {filters.map((filter) => (
             <button
@@ -105,10 +132,10 @@ const Filterbar = () => {
         </div>
       </div>
 
-      {/* dropdown */}
+      {/* Sort Dropdown */}
       <div className="sort-dropdown-container" ref={sortDropdownRef}>
         <button className="sort-button" onClick={toggleSortDropdown}>
-          <span className="span-order">Ordenar por</span>
+          <span>Ordenar por</span>
           <svg
             width="12"
             height="12"
@@ -124,7 +151,9 @@ const Filterbar = () => {
           </svg>
         </button>
         {isSortDropdownOpen && (
-          <div className="dropdown-menu sort-dropdown-menu">
+          <div
+            className={`dropdown-menu sort-dropdown-menu ${isSortClosing ? "closing" : ""}`}
+          >
             {options.map((option) => (
               <button
                 key={option.id}

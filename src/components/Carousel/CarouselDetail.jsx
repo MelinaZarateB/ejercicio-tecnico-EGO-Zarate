@@ -1,54 +1,87 @@
 import "./CarouselDetail.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 
-const CarouselDetail = ({ features }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const CarouselDetail = ({ features, repeatTimes = 6 }) => {
+  const featuresList = useMemo(() => {
+    if (!features || features.length === 0) return [];
+    return Array(repeatTimes).fill(features).flat();
+  }, [features, repeatTimes]);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
   const carouselRef = useRef(null);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+  const CARD_WIDTH = 270;
+  const GAP = 20;
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+  const calculateCardsPerView = useCallback(() => {
+    if (carouselRef.current) {
+      const width = carouselRef.current.offsetWidth;
+      setContainerWidth(width);
+
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        return 1;
+      }
+
+      const cardTotalWidth = CARD_WIDTH + GAP;
+      const visibleCards = Math.floor(width / cardTotalWidth);
+      return Math.max(1, visibleCards);
+    }
+    return 4;
   }, []);
 
-  const featuresPerSlide = isMobile ? 1 : 4;
-  const totalSlides = features
-    ? isMobile
-      ? features.length
-      : Math.ceil(features.length / featuresPerSlide)
-    : 0;
-
   useEffect(() => {
-    setCurrentSlide(0);
-  }, [isMobile]);
+    const updateCardsPerView = () => {
+      setCardsPerView(calculateCardsPerView());
+    };
+
+    updateCardsPerView();
+    window.addEventListener("resize", updateCardsPerView);
+    return () => window.removeEventListener("resize", updateCardsPerView);
+  }, [calculateCardsPerView]);
+
+  const totalPages = Math.ceil(featuresList.length / cardsPerView);
+
+  // Reset page when cardsPerView changes
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [cardsPerView]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
   };
 
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
+  const goToPage = (index) => {
+    setCurrentPage(index);
   };
 
   if (!features || features.length === 0) {
     return null;
   }
 
+  const translateX = isMobile
+    ? currentPage * containerWidth
+    : currentPage * cardsPerView * (CARD_WIDTH + GAP);
+
+  const isAtStart = currentPage === 0;
+  const isAtEnd = currentPage >= totalPages - 1;
+
   return (
     <section className="model-features">
       <div className="carousel-container">
         <button
-          className="carousel-arrow carousel-arrow-left"
+          className={`carousel-arrow carousel-arrow-left ${isAtStart ? "disabled" : ""}`}
           onClick={prevSlide}
+          disabled={isAtStart}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
@@ -63,10 +96,13 @@ const CarouselDetail = ({ features }) => {
 
         <div className="carousel-track-wrapper" ref={carouselRef}>
           <div
-            className={`carousel-track ${features.length <= 2 ? "few-items" : ""}`}
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            className="carousel-track"
+            style={{
+              transform: `translateX(-${translateX}px)`,
+              transition: "transform 0.7s ease-in-out",
+            }}
           >
-            {features.map((feature, index) => (
+            {featuresList.map((feature, index) => (
               <div key={index} className="feature-card">
                 <div className="feature-image">
                   <img
@@ -82,8 +118,9 @@ const CarouselDetail = ({ features }) => {
         </div>
 
         <button
-          className="carousel-arrow carousel-arrow-right"
+          className={`carousel-arrow carousel-arrow-right ${isAtEnd ? "disabled" : ""}`}
           onClick={nextSlide}
+          disabled={isAtEnd}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
@@ -97,13 +134,13 @@ const CarouselDetail = ({ features }) => {
         </button>
       </div>
 
-      {totalSlides > 1 && (
+      {totalPages > 1 && (
         <div className="carousel-dots">
-          {Array.from({ length: totalSlides }).map((_, index) => (
+          {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
-              className={`carousel-dot ${currentSlide === index ? "active" : ""}`}
-              onClick={() => goToSlide(index)}
+              className={`carousel-dot ${currentPage === index ? "active" : ""}`}
+              onClick={() => goToPage(index)}
             />
           ))}
         </div>

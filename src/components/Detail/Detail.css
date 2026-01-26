@@ -8,8 +8,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  font-family: "Montserrat", sans-serif;
+  height: calc(100vh - 64px);
+  font-family: "Montserrat";
+}
+
+.lazy-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 64px);
 }
 
 .model-detail-error button {
@@ -19,9 +26,10 @@
   border: 1px solid #191919;
   border-radius: 9999px;
   cursor: pointer;
-  font-family: "Montserrat";
+  font-family: "Montserrat", sans-serif;
 }
 
+/* Hero Section */
 .model-hero {
   display: flex;
   align-items: center;
@@ -32,6 +40,9 @@
 .model-hero-image {
   flex: 1;
   max-width: 50%;
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeInSlideRight 0.8s ease forwards;
 }
 
 .model-hero-image img {
@@ -43,6 +54,9 @@
 .model-hero-content {
   flex: 1;
   max-width: 50%;
+  opacity: 0;
+  transform: translateX(30px);
+  animation: fadeInSlideLeft 0.8s ease 0.2s forwards;
 }
 
 .model-segment {
@@ -71,6 +85,20 @@
   font-weight: 400;
   letter-spacing: -0.1px;
   font-family: "Montserrat";
+}
+
+@keyframes fadeInSlideRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInSlideLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .model-highlights {
